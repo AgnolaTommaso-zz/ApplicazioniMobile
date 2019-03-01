@@ -20,6 +20,9 @@ public class LocationsHolder {
 
     private LocationsHolder(Context context) {
         mLocations = new ArrayList<>();
+        Location loc=new Location();
+        loc.setName("Loc. Corrente");
+        mLocations.add(loc);
         for (int i = 0; i < 10; i++) {
             Location location = new Location();
             location.setName("Location # " + i);
