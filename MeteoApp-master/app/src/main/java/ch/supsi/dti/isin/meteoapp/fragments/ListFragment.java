@@ -1,10 +1,15 @@
 package ch.supsi.dti.isin.meteoapp.fragments;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,17 +23,33 @@ import java.util.List;
 
 import ch.supsi.dti.isin.meteoapp.R;
 import ch.supsi.dti.isin.meteoapp.activities.DetailActivity;
+import ch.supsi.dti.isin.meteoapp.activities.MainActivity;
 import ch.supsi.dti.isin.meteoapp.model.LocationsHolder;
 import ch.supsi.dti.isin.meteoapp.model.Location;
+import io.nlopez.smartlocation.OnLocationUpdatedListener;
+import io.nlopez.smartlocation.SmartLocation;
+import io.nlopez.smartlocation.location.config.LocationAccuracy;
+import io.nlopez.smartlocation.location.config.LocationParams;
 
 public class ListFragment extends Fragment {
     private RecyclerView mLocationRecyclerView;
     private LocationAdapter mAdapter;
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
+        if (ContextCompat.checkSelfPermission(getActivity(),
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            Log.i("perm", "Permission not granted");
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 0);
+
+        } else {
+            Log.i("perm", "Permission granted"); // leggo la posizione del device
+            startLocationListener();
+        }
 
 
     }
@@ -119,4 +140,30 @@ public class ListFragment extends Fragment {
             return mLocations.size();
         }
     }
+
+
+    private void startLocationListener(){
+        LocationParams.Builder builder = new LocationParams.Builder()
+                .setAccuracy(LocationAccuracy.HIGH)
+                .setDistance(0)
+                .setInterval(5000);
+        SmartLocation.with(getActivity()).location().continuous().config(builder.build())//getActivity per recuperare l'activity
+                .start(new OnLocationUpdatedListener() {
+                    @Override
+                    public void onLocationUpdated(android.location.Location location) {
+                        LocationsHolder.get(getActivity()).getLocations().get(0).setName(location.toString());
+                        Log.i("LOG",location.toString());
+                        mAdapter.notifyDataSetChanged();
+                    }
+                });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) { case 0: {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                startLocationListener();
+            }
+            return; }
+        } }
 }
