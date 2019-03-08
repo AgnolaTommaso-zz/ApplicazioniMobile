@@ -151,7 +151,7 @@ public class ListFragment extends Fragment {
                 .start(new OnLocationUpdatedListener() {
                     @Override
                     public void onLocationUpdated(android.location.Location location) {
-                        LocationsHolder.get(getActivity()).getLocations().get(0).setName(location.toString());
+                        LocationsHolder.get(getActivity()).getLocations().get(0).setName("Latitude: "+location.getLatitude()+" Longitude: "+location.getLongitude());
                         Log.i("LOG",location.toString());
                         mAdapter.notifyDataSetChanged();
                     }
