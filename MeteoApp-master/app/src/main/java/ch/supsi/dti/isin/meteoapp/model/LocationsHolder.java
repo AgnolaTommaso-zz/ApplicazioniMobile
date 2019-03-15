@@ -23,11 +23,6 @@ public class LocationsHolder {
         Location loc=new Location();
         loc.setName("Loc. Corrente");
         mLocations.add(loc);
-        for (int i = 0; i < 10; i++) {
-            Location location = new Location();
-            location.setName("Location # " + i);
-            mLocations.add(location);
-        }
     }
 
     public List<Location> getLocations() {
