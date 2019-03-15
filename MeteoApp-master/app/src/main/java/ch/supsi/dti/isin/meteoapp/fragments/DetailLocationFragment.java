@@ -7,14 +7,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
 import java.util.UUID;
 
 import ch.supsi.dti.isin.meteoapp.R;
 import ch.supsi.dti.isin.meteoapp.model.LocationsHolder;
 import ch.supsi.dti.isin.meteoapp.model.Location;
+import ch.supsi.dti.isin.meteoapp.utility.APIParser;
 import ch.supsi.dti.isin.meteoapp.utility.VolleyCallback;
 
-public class DetailLocationFragment extends Fragment{
+public class DetailLocationFragment extends Fragment implements VolleyCallback{
     private static final String ARG_LOCATION_ID = "location_id";
 
     private Location mLocation;
@@ -38,18 +43,27 @@ public class DetailLocationFragment extends Fragment{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        JsonObjectRequest jor = APIParser.getLocationInfo(mLocation.getName(), DetailLocationFragment.this);
+        RequestQueue queue = Volley.newRequestQueue(getActivity());
+        queue.add(jor);
+
         View v = inflater.inflate(R.layout.fragment_detail_location, container, false);
 
         mIdTextView = v.findViewById(R.id.id_textView);
         //mIdTextView.setText(mLocation.getId().toString());
-        Location currentLocation=LocationsHolder.get(getActivity()).getLocation(mLocation.getId());
-
-        mIdTextView.setText("Name: "+currentLocation.getName()+
-                "\nTemperature: "+currentLocation.getTemperature()
-                +"\nHumidity: "+currentLocation.getHumity()
-        +"\nDescription: "+currentLocation.getDescription());
+        mIdTextView.setText("Name: "+mLocation.getName()+
+                "\nTemperature: "+mLocation.getTemperature()
+                +"\nHumidity: "+mLocation.getHumity()
+        +"\nDescription: "+mLocation.getDescription());
         return v;
     }
 
+    @Override
+    public void onSuccess(Location location) {
+        int index = LocationsHolder.get(getContext()).getLocations().indexOf(mLocation);
+        LocationsHolder.get(getActivity()).updateLocation(index, location);
+        LocationsHolder.get(getActivity()).getLocations().get(index).setName(location.getName());
+
+    }
 }
 

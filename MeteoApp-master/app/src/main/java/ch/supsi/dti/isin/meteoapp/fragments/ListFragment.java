@@ -1,6 +1,8 @@
 package ch.supsi.dti.isin.meteoapp.fragments;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -9,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -16,6 +19,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -88,10 +92,27 @@ public class ListFragment extends Fragment implements VolleyCallback {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_add:
-                Toast toast = Toast.makeText(getActivity(),
-                        "Add a location",
-                        Toast.LENGTH_SHORT);
-                toast.show();
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("Add new location"); // TODO: Aggiungere stringa in strings.xml
+                final EditText input = new EditText(getContext());
+                input.setInputType(InputType.TYPE_CLASS_TEXT);
+                builder.setView(input);
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Location location = new Location();
+                        location.setName(input.getText().toString());
+                        LocationsHolder.get(getContext()).addLocation(location);
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                builder.show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -150,7 +171,7 @@ public class ListFragment extends Fragment implements VolleyCallback {
     }
 
 
-    private void startLocationListener(){
+    private void startLocationListener() {
         LocationParams.Builder builder = new LocationParams.Builder()
                 .setAccuracy(LocationAccuracy.HIGH)
                 .setDistance(0)
@@ -159,9 +180,9 @@ public class ListFragment extends Fragment implements VolleyCallback {
                 .start(new OnLocationUpdatedListener() {
                     @Override
                     public void onLocationUpdated(android.location.Location location) {
-                        Log.i("Meteo onLocationUpdated",location.toString());
-                        JsonObjectRequest jor=APIParser.getLocationInfo(location.getLatitude(), location.getLongitude(), ListFragment.this);
-                        RequestQueue queue= Volley.newRequestQueue(getActivity());
+                        Log.i("Meteo onLocationUpdated", location.toString());
+                        JsonObjectRequest jor = APIParser.getLocationInfo(location.getLatitude(), location.getLongitude(), ListFragment.this);
+                        RequestQueue queue = Volley.newRequestQueue(getActivity());
                         queue.add(jor);
                         mAdapter.notifyDataSetChanged();
                     }
@@ -171,17 +192,20 @@ public class ListFragment extends Fragment implements VolleyCallback {
     @Override
     public void onSuccess(Location location) {
         Log.i("Meteo onSuccess", location.toString());
-        LocationsHolder.get(getActivity()).updateLocation(0,location);
+        LocationsHolder.get(getActivity()).updateLocation(0, location);
         LocationsHolder.get(getActivity()).getLocations().get(0).setName(location.getName());
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        switch (requestCode) { case 0: {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                startLocationListener();
+        switch (requestCode) {
+            case 0: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    startLocationListener();
+                }
+                return;
             }
-            return; }
-        } }
+        }
+    }
 
 }

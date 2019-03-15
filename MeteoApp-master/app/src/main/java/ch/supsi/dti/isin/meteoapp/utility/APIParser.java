@@ -22,6 +22,7 @@ import java.io.InputStreamReader;
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
 
+import ch.supsi.dti.isin.meteoapp.fragments.ListFragment;
 import ch.supsi.dti.isin.meteoapp.model.Location;
 
 
@@ -64,5 +65,43 @@ public class APIParser {
 
 
         return jor;
+    }
+
+    public static JsonObjectRequest getLocationInfo(String name, final VolleyCallback callback) {
+        String url="https://api.openweathermap.org/data/2.5/weather?q="+name+"&units=metric&appid="+APIKEY;
+        JsonObjectRequest jor=new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    Log.i("Meteo onResponse Name", response.toString());
+                    JSONObject mainObject=response.getJSONObject("main");
+                    JSONObject coordObject=response.getJSONObject("coord");
+                    //JSONObject weatherObject=response.getJSONObject("weather");
+
+                    callback.onSuccess(new Location(response.getString("name"),
+                            String.valueOf(coordObject.getDouble("lat")),
+                            String.valueOf(coordObject.getDouble("lon")),
+                            String.valueOf(mainObject.getDouble("temp")),
+                            String.valueOf(mainObject.getDouble("humidity")),
+                            response.getJSONArray("weather").getJSONObject(0).getString("description")
+                    ));
+
+                }catch (JSONException e){
+                    Log.i("Meteo onResponse API", e.toString());
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i("Meteo API onError", error.toString());
+
+            }
+        });
+
+        return jor;
+
+
     }
 }
