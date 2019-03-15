@@ -2,6 +2,7 @@ package ch.supsi.dti.isin.meteoapp.fragments;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -36,6 +37,7 @@ import ch.supsi.dti.isin.meteoapp.R;
 import ch.supsi.dti.isin.meteoapp.activities.DetailActivity;
 import ch.supsi.dti.isin.meteoapp.activities.MainActivity;
 import ch.supsi.dti.isin.meteoapp.database.DbHelper;
+import ch.supsi.dti.isin.meteoapp.database.DbSchema;
 import ch.supsi.dti.isin.meteoapp.model.LocationsHolder;
 import ch.supsi.dti.isin.meteoapp.model.Location;
 import ch.supsi.dti.isin.meteoapp.utility.APIParser;
@@ -48,7 +50,9 @@ import io.nlopez.smartlocation.location.config.LocationParams;
 public class ListFragment extends Fragment implements VolleyCallback {
     private RecyclerView mLocationRecyclerView;
     private LocationAdapter mAdapter;
+    private SQLiteDatabase mDatabase;
 
+    LocationsHolder locationsHolder = LocationsHolder.get(getContext());
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,8 +66,7 @@ public class ListFragment extends Fragment implements VolleyCallback {
 
         } else {
             Log.i("perm", "Permission granted"); // leggo la posizione del device
-
-            SQLiteDatabase mDatabase = new DbHelper(getActivity()).getWritableDatabase();
+            mDatabase = new DbHelper(getContext()).getWritableDatabase();
             startLocationListener();
         }
 
@@ -94,6 +97,8 @@ public class ListFragment extends Fragment implements VolleyCallback {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        final ContentValues values = new ContentValues();
+
         switch (item.getItemId()) {
             case R.id.menu_add:
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -107,6 +112,9 @@ public class ListFragment extends Fragment implements VolleyCallback {
                         Location location = new Location();
                         location.setName(input.getText().toString());
                         LocationsHolder.get(getContext()).addLocation(location);
+
+                        values.put(DbSchema.LocationsTable.Cols.NAME, input.getText().toString());
+                        mDatabase.insert(DbSchema.LocationsTable.TABLE_NAME, null, values);
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
