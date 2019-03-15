@@ -20,6 +20,10 @@ public class Location {
         this.description = description;
     }
 
+    public Location(String nName){
+        this.mName = mName;
+    }
+
     public UUID getId() {
         return Id;
     }
