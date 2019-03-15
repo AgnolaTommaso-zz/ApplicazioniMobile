@@ -1,5 +1,6 @@
 package ch.supsi.dti.isin.meteoapp.utility;
 
+import android.util.Log;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -25,15 +26,16 @@ import ch.supsi.dti.isin.meteoapp.model.Location;
 
 
 public class APIParser {
-    private static String APIKEY="17909991fbcd2169ff7202ad0651c695";
+    private static String APIKEY="cc3c629069bce6858e29dedf0f73213a";
 
     public static JsonObjectRequest getLocationInfo(final double latitude, final double longitude, final VolleyCallback callback){
-        String url="http://api.openweathermap.org/data/2.5/weather?lat="+latitude+"&lon="+longitude+"&units=metric&appid="+APIKEY;
+        String url="https://api.openweathermap.org/data/2.5/weather?lat="+latitude+"&lon="+longitude+"&units=metric&appid="+APIKEY;
 
         JsonObjectRequest jor=new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
+                    Log.i("Meteo onResponse API", response.toString());
                     JSONObject mainObject=response.getJSONObject("main");
                     //JSONObject weatherObject=response.getJSONObject("weather");
 
@@ -46,6 +48,7 @@ public class APIParser {
                             ));
 
                 }catch (JSONException e){
+                    Log.i("Meteo onResponse API", e.toString());
                     e.printStackTrace();
                 }
             }
@@ -53,7 +56,7 @@ public class APIParser {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                // TODO: Handle error
+                Log.i("Meteo API onError", error.toString());
 
             }
         });

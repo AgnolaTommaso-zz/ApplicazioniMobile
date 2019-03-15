@@ -159,11 +159,10 @@ public class ListFragment extends Fragment implements VolleyCallback {
                 .start(new OnLocationUpdatedListener() {
                     @Override
                     public void onLocationUpdated(android.location.Location location) {
-
+                        Log.i("Meteo onLocationUpdated",location.toString());
                         JsonObjectRequest jor=APIParser.getLocationInfo(location.getLatitude(), location.getLongitude(), ListFragment.this);
                         RequestQueue queue= Volley.newRequestQueue(getActivity());
                         queue.add(jor);
-                        Log.i("LOG",location.toString());
                         mAdapter.notifyDataSetChanged();
                     }
                 });
@@ -171,6 +170,7 @@ public class ListFragment extends Fragment implements VolleyCallback {
 
     @Override
     public void onSuccess(Location location) {
+        Log.i("Meteo onSuccess", location.toString());
         LocationsHolder.get(getActivity()).updateLocation(0,location);
         LocationsHolder.get(getActivity()).getLocations().get(0).setName(location.getName());
     }
