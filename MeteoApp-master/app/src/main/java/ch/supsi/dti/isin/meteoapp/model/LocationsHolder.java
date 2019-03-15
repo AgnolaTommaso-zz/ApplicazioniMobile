@@ -42,4 +42,17 @@ public class LocationsHolder {
 
         return null;
     }
+
+    public void addLocation(Location location){
+        mLocations.add(location);
+    }
+
+    public void updateLocation(int pos, Location newLocation){
+        mLocations.get(pos).setName(newLocation.getName());
+        mLocations.get(pos).setDescription(newLocation.getDescription());
+        mLocations.get(pos).setHumity(newLocation.getHumity());
+        mLocations.get(pos).setLatitude(newLocation.getLatitude());
+        mLocations.get(pos).setLongitude(newLocation.getLongitude());
+        mLocations.get(pos).setTemperature(newLocation.getTemperature());
+    }
 }

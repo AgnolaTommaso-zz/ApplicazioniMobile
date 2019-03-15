@@ -19,6 +19,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONObject;
+
 import java.util.List;
 
 import ch.supsi.dti.isin.meteoapp.R;
@@ -26,12 +32,14 @@ import ch.supsi.dti.isin.meteoapp.activities.DetailActivity;
 import ch.supsi.dti.isin.meteoapp.activities.MainActivity;
 import ch.supsi.dti.isin.meteoapp.model.LocationsHolder;
 import ch.supsi.dti.isin.meteoapp.model.Location;
+import ch.supsi.dti.isin.meteoapp.utility.APIParser;
+import ch.supsi.dti.isin.meteoapp.utility.VolleyCallback;
 import io.nlopez.smartlocation.OnLocationUpdatedListener;
 import io.nlopez.smartlocation.SmartLocation;
 import io.nlopez.smartlocation.location.config.LocationAccuracy;
 import io.nlopez.smartlocation.location.config.LocationParams;
 
-public class ListFragment extends Fragment {
+public class ListFragment extends Fragment implements VolleyCallback {
     private RecyclerView mLocationRecyclerView;
     private LocationAdapter mAdapter;
 
@@ -151,11 +159,20 @@ public class ListFragment extends Fragment {
                 .start(new OnLocationUpdatedListener() {
                     @Override
                     public void onLocationUpdated(android.location.Location location) {
-                        LocationsHolder.get(getActivity()).getLocations().get(0).setName("Latitude: "+location.getLatitude()+" Longitude: "+location.getLongitude());
+
+                        JsonObjectRequest jor=APIParser.getLocationInfo(location.getLatitude(), location.getLongitude(), ListFragment.this);
+                        RequestQueue queue= Volley.newRequestQueue(getActivity());
+                        queue.add(jor);
                         Log.i("LOG",location.toString());
                         mAdapter.notifyDataSetChanged();
                     }
                 });
+    }
+
+    @Override
+    public void onSuccess(Location location) {
+        LocationsHolder.get(getActivity()).updateLocation(0,location);
+        LocationsHolder.get(getActivity()).getLocations().get(0).setName(location.getName());
     }
 
     @Override
@@ -166,4 +183,5 @@ public class ListFragment extends Fragment {
             }
             return; }
         } }
+
 }

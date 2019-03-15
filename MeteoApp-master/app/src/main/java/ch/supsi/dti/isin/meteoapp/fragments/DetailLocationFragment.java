@@ -12,8 +12,9 @@ import java.util.UUID;
 import ch.supsi.dti.isin.meteoapp.R;
 import ch.supsi.dti.isin.meteoapp.model.LocationsHolder;
 import ch.supsi.dti.isin.meteoapp.model.Location;
+import ch.supsi.dti.isin.meteoapp.utility.VolleyCallback;
 
-public class DetailLocationFragment extends Fragment {
+public class DetailLocationFragment extends Fragment{
     private static final String ARG_LOCATION_ID = "location_id";
 
     private Location mLocation;
@@ -40,9 +41,15 @@ public class DetailLocationFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_detail_location, container, false);
 
         mIdTextView = v.findViewById(R.id.id_textView);
-        mIdTextView.setText(mLocation.getId().toString());
+        //mIdTextView.setText(mLocation.getId().toString());
+        Location currentLocation=LocationsHolder.get(getActivity()).getLocation(mLocation.getId());
 
+        mIdTextView.setText("Name: "+currentLocation.getName()+
+                "\nTemperature: "+currentLocation.getTemperature()
+                +"\nHumidity: "+currentLocation.getHumity()
+        +"\nDescription: "+currentLocation.getDescription());
         return v;
     }
+
 }
 
