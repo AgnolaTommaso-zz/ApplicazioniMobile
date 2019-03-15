@@ -44,10 +44,10 @@ public class DetailLocationFragment extends Fragment{
         //mIdTextView.setText(mLocation.getId().toString());
         Location currentLocation=LocationsHolder.get(getActivity()).getLocation(mLocation.getId());
 
-        mIdTextView.setText("Name: "+currentLocation.getName()+
-                "\nTemperature: "+currentLocation.getTemperature()
-                +"\nHumidity: "+currentLocation.getHumity()
-        +"\nDescription: "+currentLocation.getDescription());
+        mIdTextView.setText(getString(R.string.app_name)+": "+currentLocation.getName()+
+                "\n"+ getString(R.string.temperature)+": "+currentLocation.getTemperature()
+                +"\n"+ getString(R.string.humidity)+": "+currentLocation.getHumity()
+                +"\n"+getString(R.string.description)+": "+currentLocation.getDescription());
         return v;
     }
 

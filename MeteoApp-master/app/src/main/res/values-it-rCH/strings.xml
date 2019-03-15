@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MeteoApp</string>
+    <string name="temperature">Temperadura</string>
+    <string name="humidity">Ümidita</string>
+    <string name="description">Descrizion</string>
+</resources>

@@ -3,6 +3,7 @@ package ch.supsi.dti.isin.meteoapp.fragments;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -30,6 +31,7 @@ import java.util.List;
 import ch.supsi.dti.isin.meteoapp.R;
 import ch.supsi.dti.isin.meteoapp.activities.DetailActivity;
 import ch.supsi.dti.isin.meteoapp.activities.MainActivity;
+import ch.supsi.dti.isin.meteoapp.database.DbHelper;
 import ch.supsi.dti.isin.meteoapp.model.LocationsHolder;
 import ch.supsi.dti.isin.meteoapp.model.Location;
 import ch.supsi.dti.isin.meteoapp.utility.APIParser;
@@ -56,6 +58,8 @@ public class ListFragment extends Fragment implements VolleyCallback {
 
         } else {
             Log.i("perm", "Permission granted"); // leggo la posizione del device
+
+            SQLiteDatabase mDatabase = new DbHelper(getActivity()).getWritableDatabase();
             startLocationListener();
         }
 
