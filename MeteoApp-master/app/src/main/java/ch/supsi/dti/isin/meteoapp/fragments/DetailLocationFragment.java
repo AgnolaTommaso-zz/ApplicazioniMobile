@@ -66,7 +66,12 @@ public class DetailLocationFragment extends Fragment implements VolleyCallback{
         int index = LocationsHolder.get(getContext()).getLocations().indexOf(mLocation);
         LocationsHolder.get(getActivity()).updateLocation(index, location);
         LocationsHolder.get(getActivity()).getLocations().get(index).setName(location.getName());
-
+        Location currentLocation=LocationsHolder.get(getActivity()).getLocation(mLocation.getId());
+        
+        mIdTextView.setText(getString(R.string.app_name)+": "+currentLocation.getName()+
+                "\n"+ getString(R.string.temperature)+": "+currentLocation.getTemperature()
+                +"\n"+ getString(R.string.humidity)+": "+currentLocation.getHumity()
+                +"\n"+getString(R.string.description)+": "+currentLocation.getDescription());
     }
 }
 
