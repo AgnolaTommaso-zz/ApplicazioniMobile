@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 
 import ch.supsi.dti.isin.meteoapp.database.DbHelper;
 import ch.supsi.dti.isin.meteoapp.fragments.ListFragment;
+import ch.supsi.dti.isin.meteoapp.service.NotificationService;
 
 public class MainActivity extends SingleFragmentActivity {
 
@@ -16,6 +17,7 @@ public class MainActivity extends SingleFragmentActivity {
         super.onCreate(savedInstanceState);
 
         mDatabase = new DbHelper(getApplicationContext()).getWritableDatabase();
+        NotificationService.setServiceAlarm(this, true, this);
     }
 
     @Override

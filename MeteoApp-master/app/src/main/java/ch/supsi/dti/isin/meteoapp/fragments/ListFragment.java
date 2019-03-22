@@ -23,23 +23,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONObject;
-
 import java.util.List;
 
 import ch.supsi.dti.isin.meteoapp.R;
 import ch.supsi.dti.isin.meteoapp.activities.DetailActivity;
-import ch.supsi.dti.isin.meteoapp.activities.MainActivity;
 import ch.supsi.dti.isin.meteoapp.database.DbHelper;
 import ch.supsi.dti.isin.meteoapp.database.DbSchema;
-import ch.supsi.dti.isin.meteoapp.model.LocationsHolder;
 import ch.supsi.dti.isin.meteoapp.model.Location;
+import ch.supsi.dti.isin.meteoapp.model.LocationsHolder;
 import ch.supsi.dti.isin.meteoapp.utility.APIParser;
 import ch.supsi.dti.isin.meteoapp.utility.VolleyCallback;
 import io.nlopez.smartlocation.OnLocationUpdatedListener;
@@ -51,7 +47,6 @@ public class ListFragment extends Fragment implements VolleyCallback {
     private RecyclerView mLocationRecyclerView;
     private LocationAdapter mAdapter;
     private SQLiteDatabase mDatabase;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,8 +63,6 @@ public class ListFragment extends Fragment implements VolleyCallback {
             mDatabase = new DbHelper(getContext()).getWritableDatabase();
             startLocationListener();
         }
-
-
     }
 
 
