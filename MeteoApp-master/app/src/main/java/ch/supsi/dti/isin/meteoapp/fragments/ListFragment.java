@@ -52,7 +52,6 @@ public class ListFragment extends Fragment implements VolleyCallback {
     private LocationAdapter mAdapter;
     private SQLiteDatabase mDatabase;
 
-    LocationsHolder locationsHolder = LocationsHolder.get(getContext());
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

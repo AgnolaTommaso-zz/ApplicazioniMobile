@@ -33,6 +33,7 @@ public class LocationsHolder {
         mLocations.add(loc);
         mDatabase = new DbHelper(context).getWritableDatabase();
         readData();
+        mDatabase.close();
 
     }
 

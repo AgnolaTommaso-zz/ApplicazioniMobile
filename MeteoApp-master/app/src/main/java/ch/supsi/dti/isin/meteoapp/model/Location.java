@@ -20,8 +20,9 @@ public class Location {
         this.description = description;
     }
 
-    public Location(String nName){
+    public Location(String mName){
         this.mName = mName;
+        Id = UUID.randomUUID();
     }
 
     public UUID getId() {

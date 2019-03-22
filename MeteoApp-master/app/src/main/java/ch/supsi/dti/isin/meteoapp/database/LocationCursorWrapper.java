@@ -13,7 +13,7 @@ public class LocationCursorWrapper extends CursorWrapper {
     }
 
     public Location getEntry() {
-        String id = getString(getColumnIndex(DbSchema.LocationsTable.Cols.ID));
+        //String id = getString(getColumnIndex(DbSchema.LocationsTable.Cols.ID));
         String name = getString(getColumnIndex(DbSchema.LocationsTable.Cols.NAME));
         return new Location(name);
     }
