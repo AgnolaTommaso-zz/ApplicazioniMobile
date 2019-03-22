@@ -4,4 +4,10 @@
     <string name="temperature">Temperatura</string>
     <string name="humidity">Umidità</string>
     <string name="description">Descrizione</string>
+    <string name="remove">Rimuovi Luogo</string>
+    <string name="addLocation">Aggiungi nuovo Luogo</string>
+    <string name="okDialog">Va bene</string>
+    <string name="cancelDialog">Cancella</string>
+    <string name="city">Città: </string>
+
 </resources>

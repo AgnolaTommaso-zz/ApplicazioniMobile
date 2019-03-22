@@ -94,11 +94,11 @@ public class ListFragment extends Fragment implements VolleyCallback {
         switch (item.getItemId()) {
             case R.id.menu_add:
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setTitle("Add new location"); // TODO: Aggiungere stringa in strings.xml
+                builder.setTitle(getString(R.string.addLocation)); // TODO: Aggiungere stringa in strings.xml
                 final EditText input = new EditText(getContext());
                 input.setInputType(InputType.TYPE_CLASS_TEXT);
                 builder.setView(input);
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton(getString(R.string.okDialog), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Location location = new Location();
@@ -109,7 +109,7 @@ public class ListFragment extends Fragment implements VolleyCallback {
                         mDatabase.insert(DbSchema.LocationsTable.TABLE_NAME, null, values);
                     }
                 });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(getString(R.string.cancelDialog), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();

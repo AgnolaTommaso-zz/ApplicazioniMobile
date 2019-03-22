@@ -61,6 +61,7 @@ public class LocationsHolder {
         mLocations.get(pos).setLatitude(newLocation.getLatitude());
         mLocations.get(pos).setLongitude(newLocation.getLongitude());
         mLocations.get(pos).setTemperature(newLocation.getTemperature());
+        mLocations.get(pos).setWeatherid(newLocation.getWeatherid());
     }
 
     private void readData() {

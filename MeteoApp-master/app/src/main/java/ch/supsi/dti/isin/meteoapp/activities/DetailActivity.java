@@ -38,6 +38,7 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public Fragment getItem(int i) {
                 Location location=locationList.get(i);
+                setTitle(location.getName());
                 return DetailLocationFragment.newInstance(location.getId());
             }
 

@@ -4,4 +4,10 @@
     <string name="temperature">Temperadura</string>
     <string name="humidity">Ümidita</string>
     <string name="description">Descrizion</string>
+    <string name="remove">Cancela Siit</string>
+    <string name="addLocation">Met denta un nöf siit</string>
+    <string name="okDialog">Va ben</string>
+    <string name="cancelDialog">Cancela</string>
+    <string name="city">Paes: </string>
+
 </resources>
