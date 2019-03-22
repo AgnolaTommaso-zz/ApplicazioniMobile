@@ -17,7 +17,7 @@ public class MainActivity extends SingleFragmentActivity {
         super.onCreate(savedInstanceState);
 
         mDatabase = new DbHelper(getApplicationContext()).getWritableDatabase();
-        NotificationService.setServiceAlarm(this, true, this);
+        NotificationService.setServiceAlarm(this, true, this); //TODO l'app quando si gira crasha perché l'activity é null (la ricrea)
     }
 
     @Override

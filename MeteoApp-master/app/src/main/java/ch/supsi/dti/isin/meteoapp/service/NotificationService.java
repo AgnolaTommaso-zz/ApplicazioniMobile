@@ -63,7 +63,7 @@ public class NotificationService extends IntentService implements VolleyCallback
         LocationParams.Builder builder = new LocationParams.Builder()
                 .setAccuracy(LocationAccuracy.HIGH)
                 .setDistance(0)
-                .setInterval(5000);
+                .setInterval(1000*60);
         SmartLocation.with(activity).location().continuous().config(builder.build())//getActivity per recuperare l'activity
                 .start(new OnLocationUpdatedListener() {
                     @Override

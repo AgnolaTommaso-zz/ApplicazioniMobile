@@ -106,7 +106,7 @@ public class ListFragment extends Fragment implements VolleyCallback {
                         LocationsHolder.get(getContext()).addLocation(location);
 
                         values.put(DbSchema.LocationsTable.Cols.NAME, input.getText().toString());
-                        mDatabase.insert(DbSchema.LocationsTable.TABLE_NAME, null, values);
+                        mDatabase.insert(DbSchema.LocationsTable.TABLE_NAME, null, values); //TODO crash al primo inserimento di una città
                     }
                 });
                 builder.setNegativeButton(getString(R.string.cancelDialog), new DialogInterface.OnClickListener() {
