@@ -3,8 +3,6 @@ package ch.supsi.dti.isin.meteoapp.database;
 import android.database.Cursor;
 import android.database.CursorWrapper;
 
-import java.util.UUID;
-
 import ch.supsi.dti.isin.meteoapp.model.Location;
 
 public class LocationCursorWrapper extends CursorWrapper {
