@@ -1,11 +1,13 @@
 <resources>
     <string name="app_name">MeteoApp</string>
-    <string name="temperature">Temperature</string>
-    <string name="humidity">Humidity</string>
+    <string name="temperature">Temperature: </string>
+    <string name="humidity">Humidity: </string>
     <string name="description">Description</string>
     <string name="remove">Remove Location</string>
     <string name="addLocation">Add New Location</string>
     <string name="okDialog">Add New Location</string>
     <string name="cancelDialog">Add New Location</string>
+    <string name="city">City: </string>
+
 
 </resources>

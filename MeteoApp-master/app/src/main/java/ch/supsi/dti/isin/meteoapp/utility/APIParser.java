@@ -45,7 +45,8 @@ public class APIParser {
                             String.valueOf(longitude),
                             String.valueOf(mainObject.getDouble("temp")),
                             String.valueOf(mainObject.getDouble("humidity")),
-                            response.getJSONArray("weather").getJSONObject(0).getString("description")
+                            response.getJSONArray("weather").getJSONObject(0).getString("description"),
+                            response.getJSONArray("weather").getJSONObject(0).getInt("id")
                             ));
 
                 }catch (JSONException e){
@@ -83,7 +84,8 @@ public class APIParser {
                             String.valueOf(coordObject.getDouble("lon")),
                             String.valueOf(mainObject.getDouble("temp")),
                             String.valueOf(mainObject.getDouble("humidity")),
-                            response.getJSONArray("weather").getJSONObject(0).getString("description")
+                            response.getJSONArray("weather").getJSONObject(0).getString("description"),
+                            response.getJSONArray("weather").getJSONObject(0).getInt("id")
                     ));
 
                 }catch (JSONException e){

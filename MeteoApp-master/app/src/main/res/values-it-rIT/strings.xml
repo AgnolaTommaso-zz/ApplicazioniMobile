@@ -8,4 +8,6 @@
     <string name="addLocation">Aggiungi nuovo Luogo</string>
     <string name="okDialog">Va bene</string>
     <string name="cancelDialog">Cancella</string>
+    <string name="city">Città: </string>
+
 </resources>

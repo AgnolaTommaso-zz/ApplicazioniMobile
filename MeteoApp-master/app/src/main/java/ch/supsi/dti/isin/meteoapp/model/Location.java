@@ -10,14 +10,16 @@ public class Location {
     private String temperature;
     private String humity;
     private String description;
+    private int weatherid;
 
-    public Location(String mName, String latitude, String longitude, String temperature, String humity, String description) {
+    public Location(String mName, String latitude, String longitude, String temperature, String humity, String description, int weatherid) {
         this.mName = mName;
         this.latitude = latitude;
         this.longitude = longitude;
         this.temperature = temperature;
         this.humity = humity;
         this.description = description;
+        this.weatherid=weatherid;
     }
 
     public Location(String mName){
@@ -85,5 +87,13 @@ public class Location {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getWeatherid() {
+        return weatherid;
+    }
+
+    public void setWeatherid(int weatherid) {
+        this.weatherid = weatherid;
     }
 }

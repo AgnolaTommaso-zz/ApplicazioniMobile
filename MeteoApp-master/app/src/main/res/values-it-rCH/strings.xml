@@ -8,4 +8,6 @@
     <string name="addLocation">Met denta un nöf siit</string>
     <string name="okDialog">Va ben</string>
     <string name="cancelDialog">Cancela</string>
+    <string name="city">Paes: </string>
+
 </resources>
